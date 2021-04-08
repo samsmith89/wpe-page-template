@@ -42,7 +42,6 @@ class WPTSettings {
 						<div class="meta-box-sortables ui-sortable">
 							<form id="posts-filter" method="get">
 								<?php
-								$post_obj->screen->post_type = 'post';
 								$post_obj->display();
 								?>
 							</form>
