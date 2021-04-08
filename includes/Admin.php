@@ -22,14 +22,25 @@ class Admin {
 	}
 
 	public function __construct() {
-		add_action( 'wp_footer', [ $this, 'my_standard_settings' ] );
+//		add_action( 'wp_footer', [ $this, 'my_standard_settings' ] );
 	}
 
 	/**
 	 * @return mixed
 	 */
 	public function my_standard_settings() {
-		echo "working";
+		$page_template = get_page_template_slug();
+		$templates = wp_get_theme()->get_page_templates($post->ID, 'page' );
+
+		if ( $page_template ) {
+			foreach ( $templates as $slug => $template ) {
+				if ( ( $page_template === $slug ) ) {
+					echo $template;
+				}
+			}
+		} else {
+			echo "Default Page Template";
+		}
 	}
 }
 
