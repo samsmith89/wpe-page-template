@@ -33,9 +33,11 @@ class WPT {
 
 	protected function includes() {
 		require_once( $this->get_plugin_dir() . 'vendor/autoload.php' );
+		require_once( $this->get_plugin_dir() . 'includes/class-sort.php' );
+		require_once( $this->get_plugin_dir() . 'includes/class-settings.php' );
 
-		WPT\Admin::get_instance();
-		WPT\Settings::get_instance();
+		WPTSort::get_instance();
+		WPTSettings::get_instance();
 	}
 
 	public function maybe_setup() {

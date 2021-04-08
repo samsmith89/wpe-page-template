@@ -1,7 +1,5 @@
 <?php
 
-namespace WPT;
-
 /**
  * Creates the additional admin setting page that displays the summary of page templates
  *
@@ -9,7 +7,7 @@ namespace WPT;
  *
  */
 
-class Settings {
+class WPTSettings {
 
 	protected static $_instance;
 
