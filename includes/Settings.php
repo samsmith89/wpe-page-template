@@ -3,13 +3,13 @@
 namespace WPT;
 
 /**
- * Creates the additional column on admin pages for page template name
+ * Creates the additional admin setting page that displays the summary of page templates
  *
  * @since 1.0.0
  *
  */
 
-class Admin {
+class Settings {
 
 	protected static $_instance;
 
@@ -22,7 +22,7 @@ class Admin {
 	}
 
 	public function __construct() {
-		add_action( 'wp_footer', [ $this, 'my_standard_settings' ] );
+//		add_action( 'wp_footer', [ $this, 'my_standard_settings' ] );
 	}
 
 	/**
@@ -32,4 +32,3 @@ class Admin {
 		echo "working";
 	}
 }
-

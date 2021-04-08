@@ -35,6 +35,7 @@ class WPT {
 		require_once( $this->get_plugin_dir() . 'vendor/autoload.php' );
 
 		WPT\Admin::get_instance();
+		WPT\Settings::get_instance();
 	}
 
 	public function maybe_setup() {
