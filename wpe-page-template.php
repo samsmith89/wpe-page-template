@@ -32,7 +32,7 @@ class WPT {
 	}
 
 	protected function includes() {
-		require_once( $this->get_plugin_dir() . 'vendor/autoload.php' );
+//		require_once( $this->get_plugin_dir() . 'includes/lib/autoloader.php' );
 		require_once( $this->get_plugin_dir() . 'includes/class-sort.php' );
 		require_once( $this->get_plugin_dir() . 'includes/class-settings.php' );
 
