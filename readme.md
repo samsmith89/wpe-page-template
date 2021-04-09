@@ -24,7 +24,7 @@ e.g.
 1. Upload WPE Page template to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. View the new column that displays the template pages from the "Pages" admin screen
-1. See the summary page with page template information in Settings >> WPE Templates
+1. Navigate to the summary page with page template information in Settings >> WPE Templates
 
 ## Changelog
 
