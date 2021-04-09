@@ -100,7 +100,7 @@ class Sort {
 			'cb' => $columns['cb'],
 			'title' => $columns['title'],
 			'author' => $columns['author'],
-			'page_template' => __( 'Page Template', WPT::get_id() ),
+			'page_template' => $columns[_( 'Page Template', WPT::get_id() ) ],
 			'comments' => $columns['comments'],
 			'date' => $columns['date']
 		);
