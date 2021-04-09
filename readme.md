@@ -12,7 +12,7 @@ This plugin helps with organization of page templates
 
 ## Description
 
-This plugin adds options on the admin page for customizing pages for sorting by page template. There is also a settings\
+This plugin adds options on the admin page for customizing pages for sorting by page template. There is also a settings
 page that gives a summary of which page templates are being utilized and by which pages
 
 ## Installation
