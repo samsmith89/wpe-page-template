@@ -1,6 +1,7 @@
 <?php
 namespace WPT\Includes;
 
+use WPT;
 use WPT\Includes\Settings_Table as Settings_Table;
 
 /**
@@ -9,7 +10,6 @@ use WPT\Includes\Settings_Table as Settings_Table;
  * @since 1.0.0
  *
  */
-
 
 class Settings {
 
@@ -24,34 +24,45 @@ class Settings {
 	}
 
 	public function __construct() {
-		add_action( 'admin_menu', [ $this, 'wpt_add_settings_page' ] );
+		add_action( 'admin_menu', [ $this, 'add_settings_page' ] );
 	}
 
-	public function wpt_add_settings_page() {
-		add_menu_page( 'WPE Templates', 'WPE Templates', 'manage_options', 'wpe-templates', [ $this, 'wpt_render_plugin_settings_page'] );
+	/**
+	 * Adds the Menu page for the WPT summary
+	 *
+	 * @since 1.0.0
+	 *
+	 * @see add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position  )
+	 * @link https://developer.wordpress.org/reference/functions/add_menu_page/
+	 */
+
+	public function add_settings_page() {
+		add_menu_page( 'WPE Templates', 'WPE Templates', 'manage_options', 'wpe-templates', [ $this, 'render_plugin_settings_page'] );
 	}
 
-	public function wpt_render_plugin_settings_page() {
+	/**
+	 * Renders the markup for the Settings page
+	 *
+	 * @since 1.0.0
+	 *
+	 * @see add_settings_page()
+	 * @see Settings_Table class
+	 * @see prepare_items()
+	 * @see display()
+	 */
+
+	public function render_plugin_settings_page() {
 		$post_obj = new Settings_Table();
 		?>
 		<div class="wrap">
-			<h2><?php __( 'WPT Templates', 'wpt' ) ?></h2>
-			<?php
-			if( isset($_POST['s']) ){
-				$post_obj->prepare_items($_POST['s']);
-			} else {
-				$post_obj->prepare_items();
-			}
-			?>
+			<h2><?php _e( 'WPE Templates', WPT::get_id() ) ?></h2>
+			<?php $post_obj->prepare_items(); ?>
 			<div id="poststuff">
 				<div id="post-body" class="metabox-holder columns-2">
 					<div id="post-body-content">
 						<div class="meta-box-sortables ui-sortable">
 							<form id="posts-filter" method="get">
-								<?php
-								$post_obj->search_box("Search Templates", "search_templates_id");
-								$post_obj->display();
-								?>
+								<?php $post_obj->display(); ?>
 							</form>
 						</div>
 					</div>

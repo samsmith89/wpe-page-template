@@ -1,10 +1,14 @@
 <?php
 namespace WPT\Includes;
+
+use WPT;
+
 /**
  * Creates the additional column on admin pages for page template name
  *
  * @since 1.0.0
  */
+
 class Sort {
 
 	protected static $_instance;
@@ -92,9 +96,15 @@ class Sort {
 	 */
 
 	public function wpt_columns_page_template( $columns ) {
-		$columns['page_template'] = 'Page Template';
-
-		return $columns;
+		$custom_col_order = array(
+			'cb' => $columns['cb'],
+			'title' => $columns['title'],
+			'author' => $columns['author'],
+			'page_template' => __( 'Page Template', WPT::get_id() ),
+			'comments' => $columns['comments'],
+			'date' => $columns['date']
+		);
+		return $custom_col_order;
 	}
 
 	/**
@@ -120,7 +130,7 @@ class Sort {
 				}
 			}
 		} else {
-			echo '<a href="' . add_query_arg( 'wpt', 'default' ) . '">' . __( "Default Page Template", 'wpt' ) . "</a>";
+			echo '<a href="' . add_query_arg( 'wpt', 'default' ) . '">' . __( "Default Page Template", WPT::get_id() ) . "</a>";
 		}
 	}
 }

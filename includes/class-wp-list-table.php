@@ -11,6 +11,8 @@ namespace WPT\Includes;
 
 /**
  * Base class for displaying a list of items in an ajaxified HTML table.
+ * Pulled from WP Core per documentation recommendation here:
+ * https://developer.wordpress.org/reference/classes/wp_list_table/#developer-usage-private-status
  *
  * @since 3.1.0
  * @access private

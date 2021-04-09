@@ -3,7 +3,7 @@
  * Dynamically loads the class attempting to be instantiated elsewhere in the
  * plugin by looking at the $class_name parameter being passed as an argument.
  *
- * The argument should be in the form: NDS_WP_List_Table_Demo\Namespace. The
+ * The argument should be in the form: WPT\Namespace. The
  * function will then break the fully-qualified class name into its pieces and
  * will then build a file to the path based on the namespace.
  *
@@ -11,12 +11,7 @@
  *
  * @param string $class_name The fully-qualified name of the class to load.
  *
- * @since   1.1.0
- */
-
-/*
- * Thanks to Tom McFarlin
- * https://code.tutsplus.com/tutorials/using-namespaces-and-autoloading-in-wordpress-plugins-4--cms-27342
+ * @since   1.0.0
  */
 
 spl_autoload_register( function( $class_name ) {
@@ -40,12 +35,6 @@ spl_autoload_register( function( $class_name ) {
 		// If we're at the first entry, then we're at the filename.
 		if ( count( $file_parts ) - 1 === $i ) {
 
-			/*
-			 If 'interface' is contained in the parts of the file name, then
-			 * define the $file_name differently so that it's properly loaded.
-			 * Otherwise, just set the $file_name equal to that of the class
-			 * filename structure.
-			 */
 			if ( strpos( strtolower( $file_parts[ count( $file_parts ) - 1 ] ), 'interface' ) ) {
 
 				// Grab the name of the interface from its qualified name.

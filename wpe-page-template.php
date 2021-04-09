@@ -11,7 +11,6 @@
  * @package         Wpe_Page_Template
  */
 
-// Your code starts here.
 class WPT {
 
 	protected static $_instance;
@@ -30,6 +29,12 @@ class WPT {
 		add_action( 'plugins_loaded', array( $this, 'maybe_setup' ), - 9999 );
 	}
 
+	/**
+	 * Includes the appropriate files, instances, and calls the needed classes.
+	 *
+	 * @since 1.0.0
+	 */
+
 	protected function includes() {
 		require_once( $this->get_plugin_dir() . 'includes/lib/autoloader.php' );
 
@@ -37,48 +42,83 @@ class WPT {
 		WPT\Includes\Settings::get_instance();
 	}
 
+	/**
+	 * Calls the includes and actions methods
+	 *
+	 * @since 1.0.0
+	 */
+
 	public function maybe_setup() {
-		if ( ! $this->check_required_plugins() ) {
-			return;
-		}
 
 		$this->includes();
 		$this->actions();
+
 	}
 
+	/**
+	 * Calls the actions needed for enqueuing scripts and styles
+	 *
+	 * @since 1.0.0
+	 */
+
 	protected function actions() {
-//        add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ) );
-//        add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'styles' ) );
 	}
+
+	/**
+	 * Handles enqueuing styles
+	 *
+	 * @since 1.0.0
+	 */
 
 	public function styles() {
 		wp_enqueue_style( $this->get_id() . '-styles', $this->get_plugin_url() . '/assets/css/admin-styles.css', array(), $this->get_version() );
 	}
 
+	/**
+	 * Gets the plugin URL
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+
 	public function get_plugin_url() {
 		return plugin_dir_url( $this->get_plugin_file() );
 	}
+
+	/**
+	 * Gets the plugin directory
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
 
 	public function get_plugin_dir() {
 		return plugin_dir_path( $this->get_plugin_file() );
 	}
 
+	/**
+	 * Gets the plugin filepath
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+
 	public function get_plugin_file() {
 		return __FILE__;
 	}
 
-	protected function check_required_plugins() {
-		return true;
-	}
-
 	/**
-	 * Return the version of the plugin
+	 * Returns the version of the plugin
 	 *
-	 * @return string
 	 * @since  1.0.0
 	 *
+	 * @return string
 	 */
+
 	public function get_version() {
 		return self::$_version;
 	}
@@ -90,14 +130,21 @@ class WPT {
 	 * @since  1.0.0
 	 *
 	 */
-	public function get_id() {
+	public static function get_id() {
 		return 'wpt';
 	}
 
 }
 
+/**
+ * Instantiates the class
+ *
+ * @since 1.0.0
+ *
+ * @return object
+ */
+
 function WPT() {
 	return WPT::get_instance();
 }
-
 WPT();
