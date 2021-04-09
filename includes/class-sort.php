@@ -24,7 +24,7 @@ class Sort {
 	public function __construct() {
 		add_filter( 'query_vars', [ $this, 'wpt_query_vars_filter' ] );
 		add_action( 'pre_get_posts', [ $this, 'wpt_alter_query' ] );
-		add_filter( 'manage_page_posts_columns', [ $this, 'wpt_columns_page_template' ] );
+		add_filter( 'manage_page_posts_columns', [ $this, 'add_columns_page_template' ] );
 		add_action( 'manage_page_posts_custom_column', [ $this, 'wpt_columns_page_template_data' ], 10, 2 );
 	}
 
@@ -95,16 +95,17 @@ class Sort {
 	 * @return array Modified columns array.
 	 */
 
-	public function wpt_columns_page_template( $columns ) {
-		$custom_col_order = array(
+	public function add_columns_page_template( $columns ) {
+
+		return array(
 			'cb' => $columns['cb'],
 			'title' => $columns['title'],
 			'author' => $columns['author'],
-			'page_template' => $columns[_( 'Page Template', WPT::get_id() ) ],
+			'page_template' => __( 'Page Template', WPT::get_id() ),
 			'comments' => $columns['comments'],
 			'date' => $columns['date']
 		);
-		return $custom_col_order;
+
 	}
 
 	/**
@@ -120,17 +121,19 @@ class Sort {
 	 */
 
 	public function wpt_columns_page_template_data( $column, $post_id ) {
-		$page_template = get_page_template_slug();
-		$templates     = wp_get_theme()->get_page_templates( $post_id, 'page' );
+		if ( $column === 'page_template') {
+			$page_template = get_page_template_slug();
+			$templates     = wp_get_theme()->get_page_templates( $post_id, 'page' );
 
-		if ( $page_template ) {
-			foreach ( $templates as $slug => $template ) {
-				if ( ( $page_template === $slug ) ) {
-					echo '<a href="' . add_query_arg( 'wpt', $slug ) . '">' . $template . "</a>";
+			if ( $page_template ) {
+				foreach ( $templates as $slug => $template ) {
+					if ( ( $page_template === $slug ) ) {
+						echo '<a href="' . add_query_arg( 'wpt', $slug ) . '">' . $template . "</a>";
+					}
 				}
+			} else {
+				echo '<a href="' . add_query_arg( 'wpt', 'default' ) . '">' . __( "Default Page Template", WPT::get_id() ) . "</a>";
 			}
-		} else {
-			echo '<a href="' . add_query_arg( 'wpt', 'default' ) . '">' . __( "Default Page Template", WPT::get_id() ) . "</a>";
 		}
 	}
 }
