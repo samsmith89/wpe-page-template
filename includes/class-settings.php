@@ -57,16 +57,10 @@ class Settings {
 		<div class="wrap">
 			<h2><?php _e( 'WPE Templates', WPT::get_id() ) ?></h2>
 			<?php $post_obj->prepare_items(); ?>
-			<div id="poststuff">
-				<div id="post-body" class="metabox-holder columns-2">
-					<div id="post-body-content">
-						<div class="meta-box-sortables ui-sortable">
-							<form id="posts-filter" method="get">
-								<?php $post_obj->display(); ?>
-							</form>
-						</div>
-					</div>
-				</div>
+			<div id="wpt-template-wrap">
+				<form id="templates-filter" method="get">
+					<?php $post_obj->display(); ?>
+				</form>
 			</div>
 		</div>
 		<?php

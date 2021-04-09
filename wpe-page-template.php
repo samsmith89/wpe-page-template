@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:     WPE Page Template
+ * Plugin Name:     WPE Page Templates
  * Description:     Adds organization to page template files.
  * Author:          Sam Smith
  * Author URI:      https://gsamsmith.com
@@ -137,7 +137,7 @@ class WPT {
 }
 
 /**
- * Instantiates the class
+ * Instantiates the WPT class
  *
  * @since 1.0.0
  *

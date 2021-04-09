@@ -27,26 +27,11 @@ class Settings_Table extends WP_List_Table {
 
 	public function prepare_items() {
 
-//		$per_page = 3;
-//		$current_page = $this->get_pagenum();
-//		if ( 1 < $current_page ) {
-//			$offset = $per_page * ( $current_page - 1 );
-//		} else {
-//			$offset = 0;
-//		}
-
 		$this->items = $this->wpt_list_table_data();
 
 		$columns = $this->get_columns();
 
 		$this->_column_headers = array( $columns );
-
-		// Set the pagination
-//		$this->set_pagination_args( array(
-//			'total_items' => count($this->items),
-//			'per_page' => $per_page,
-//			'total_pages' => ceil( count($this->items) / $per_page )
-//		) );
 
 	}
 
@@ -153,14 +138,11 @@ class Settings_Table extends WP_List_Table {
 	public function column_default( $item, $column_name ) {
 
 		switch ( $column_name ) {
-
 			case 'number':
 			case 'title':
 			case 'slug':
 			case 'pages':
 				return $item[ $column_name ];
-			default:
-				return "0";
 		}
 	}
 

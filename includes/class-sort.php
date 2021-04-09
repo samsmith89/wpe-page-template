@@ -84,7 +84,7 @@ class Sort {
 	}
 
 	/**
-	 * Adds "Page Template" column to the pages admin
+	 * Adds "Page Template" column to the pages admin and reorders them.
 	 *
 	 * @since 1.0.0
 	 *
@@ -109,7 +109,7 @@ class Sort {
 	}
 
 	/**
-	 * Populates the "Page Template" column with page template data
+	 * Populates the "Page Template" column with page template data.
 	 *
 	 * @since 1.0.0
 	 *
