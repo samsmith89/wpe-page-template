@@ -1,10 +1,10 @@
 <?php
+namespace WPT\Includes;
 
-if ( ! class_exists( 'WPT_WP_List_Table' ) ) {
-	require_once( dirname( __FILE__ ) . "/class-wp-list-table.php" );
-}
+use WP_Query;
+use WPT\Includes\WP_List_Table as WP_List_Table;
 
-class WPT_Pages_List extends WPT_WP_List_Table {
+class Settings_Table extends WP_List_Table {
 
 	public function prepare_items() {
 

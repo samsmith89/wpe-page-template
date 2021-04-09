@@ -1,4 +1,6 @@
 <?php
+namespace WPT\Includes;
+
 /**
  * Administration API: WP_List_Table class
  *
@@ -13,7 +15,7 @@
  * @since 3.1.0
  * @access private
  */
-class WPT_WP_List_Table {
+class WP_List_Table {
 
 	/**
 	 * The current list of items.

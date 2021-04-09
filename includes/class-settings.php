@@ -1,5 +1,7 @@
 <?php
-require_once( dirname( __FILE__ ) . "/class-settings-table.php" );
+namespace WPT\Includes;
+
+use WPT\Includes\Settings_Table as Settings_Table;
 
 /**
  * Creates the additional admin setting page that displays the summary of page templates
@@ -9,7 +11,7 @@ require_once( dirname( __FILE__ ) . "/class-settings-table.php" );
  */
 
 
-class WPTSettings {
+class Settings {
 
 	protected static $_instance;
 
@@ -23,7 +25,6 @@ class WPTSettings {
 
 	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'wpt_add_settings_page' ] );
-//		add_filter( 'manage_wpe-templates_page_columns', [ 'WPT_Pages_List', 'get_my_columns' ] );
 	}
 
 	public function wpt_add_settings_page() {
@@ -31,10 +32,10 @@ class WPTSettings {
 	}
 
 	public function wpt_render_plugin_settings_page() {
-		$post_obj = new WPT_Pages_List();
+		$post_obj = new Settings_Table();
 		?>
 		<div class="wrap">
-			<h2>WPT Templates</h2>
+			<h2><?php __( 'WPT Templates', 'wpt' ) ?></h2>
 			<?php
 			if( isset($_POST['s']) ){
 				$post_obj->prepare_items($_POST['s']);
@@ -55,7 +56,6 @@ class WPTSettings {
 						</div>
 					</div>
 				</div>
-<!--				<br class="clear">-->
 			</div>
 		</div>
 		<?php

@@ -1,11 +1,11 @@
 <?php
-
+namespace WPT\Includes;
 /**
  * Creates the additional column on admin pages for page template name
  *
  * @since 1.0.0
  */
-class WPTSort {
+class Sort {
 
 	protected static $_instance;
 

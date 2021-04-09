@@ -1,13 +1,12 @@
 <?php
 /**
- * Plugin Name:     Wpe Page Template
- * Plugin URI:      PLUGIN SITE HERE
- * Description:     PLUGIN DESCRIPTION HERE
- * Author:          YOUR NAME HERE
- * Author URI:      YOUR SITE HERE
- * Text Domain:     wpe-page-template
+ * Plugin Name:     WPE Page Template
+ * Description:     Adds organization to page template files.
+ * Author:          Sam Smith
+ * Author URI:      https://gsamsmith.com
+ * Text Domain:     wpt
  * Domain Path:     /languages
- * Version:         0.1.0
+ * Version:         1.0.0
  *
  * @package         Wpe_Page_Template
  */
@@ -32,12 +31,10 @@ class WPT {
 	}
 
 	protected function includes() {
-//		require_once( $this->get_plugin_dir() . 'includes/lib/autoloader.php' );
-		require_once( $this->get_plugin_dir() . 'includes/class-sort.php' );
-		require_once( $this->get_plugin_dir() . 'includes/class-settings.php' );
+		require_once( $this->get_plugin_dir() . 'includes/lib/autoloader.php' );
 
-		WPTSort::get_instance();
-		WPTSettings::get_instance();
+		WPT\Includes\Sort::get_instance();
+		WPT\Includes\Settings::get_instance();
 	}
 
 	public function maybe_setup() {
@@ -94,7 +91,7 @@ class WPT {
 	 *
 	 */
 	public function get_id() {
-		return 'WPT';
+		return 'wpt';
 	}
 
 }
