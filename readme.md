@@ -1,4 +1,4 @@
-=== WPE Page Template ===
+# WPE Page Template
 Contributors: gsamsmith
 Tags: page-templates, organization
 Requires at least: 4.5
@@ -10,12 +10,12 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin helps with organization of page templates
 
-== Description ==
+## Description
 
 This plugin adds options on the admin page for customizing pages for sorting by page template. There is also a settings
 page that gives a summary of which page templates are being utilized and by which pages
 
-== Installation ==
+## Installation
 
 This section describes how to install the plugin and get it working.
 
@@ -26,7 +26,7 @@ e.g.
 1. View the new column that displays the template pages from the "Pages" admin screen
 1. See the summary page with page template information in Settings >> WPE Templates
 
-== Changelog ==
+## Changelog
 
-= 1.0 =
-* Inital Release
+### 1.0
+**Inital Release**
