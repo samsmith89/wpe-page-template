@@ -8,7 +8,9 @@ class WPT_Pages_List extends WPT_WP_List_Table {
 
 	public function prepare_items() {
 
-		$this->items = $this->wpt_list_table_data();
+		$search_term = isset($_POST['s']) ? trim($_POST['s']) : "";
+
+		$this->items = $this->wpt_list_table_data($search_term);
 
 		$columns = $this->get_columns();
 
@@ -16,27 +18,34 @@ class WPT_Pages_List extends WPT_WP_List_Table {
 
 	}
 
-	public function wpt_list_table_data() {
+	public function wpt_list_table_data($search_term = '') {
 
 		$all_templates = get_page_templates( null, 'page' );
 
 		$templates_array = array();
 
-		if ( count( $all_templates ) > 0 ) {
+		if ( $all_templates ) {
 
 			$count = 1;
 			foreach ( $all_templates as $template => $slug ) {
 				$args          = array(
+					'post_type' => 'page',
 					'meta_key'   => '_wp_page_template',
 					'meta_value' => $slug
 				);
-				$page_number   = get_pages( $args );
+
+				if ( ! empty( $search_term ) ) {
+					$args['s'] = $search_term;
+				}
+				$the_query = new WP_Query( $args );
+
 				$templates_array[] = array(
 					"number" => $count,
 					"title"  => $template,
 					"slug"   => $slug ,
-					"pages"  => '<a href="/wp-admin/edit.php?post_type=page&wpt=' . $slug  . '">' . count( $page_number ) . '</a>'
+					"pages"  => '<a href="/wp-admin/edit.php?post_type=page&wpt=' . $slug  . '">' . $the_query->found_posts . '</a>'
 				);
+				wp_reset_postdata();
 				$count ++;
 			}
 

@@ -35,13 +35,20 @@ class WPTSettings {
 		?>
 		<div class="wrap">
 			<h2>WPT Templates</h2>
-			<?php $post_obj->prepare_items(); ?>
+			<?php
+			if( isset($_POST['s']) ){
+				$post_obj->prepare_items($_POST['s']);
+			} else {
+				$post_obj->prepare_items();
+			}
+			?>
 			<div id="poststuff">
 				<div id="post-body" class="metabox-holder columns-2">
 					<div id="post-body-content">
 						<div class="meta-box-sortables ui-sortable">
 							<form id="posts-filter" method="get">
 								<?php
+								$post_obj->search_box("Search Templates", "search_templates_id");
 								$post_obj->display();
 								?>
 							</form>
