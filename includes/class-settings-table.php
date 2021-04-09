@@ -6,7 +6,8 @@ use WPT;
 use WPT\Includes\WP_List_Table as WP_List_Table;
 
 /**
- * Extends the WP_List_Table class that's been copied from core per documentation.
+ * Extends the WP_List_Table class that's been copied from core per documentation recommendation:
+ * https://developer.wordpress.org/reference/classes/wp_list_table/#developer-usage-private-status
  *
  * @since 1.0.0
  *
@@ -26,28 +27,26 @@ class Settings_Table extends WP_List_Table {
 
 	public function prepare_items() {
 
-		$per_page = 3;
-		$current_page = $this->get_pagenum();
-		if ( 1 < $current_page ) {
-			$offset = $per_page * ( $current_page - 1 );
-		} else {
-			$offset = 0;
-		}
+//		$per_page = 3;
+//		$current_page = $this->get_pagenum();
+//		if ( 1 < $current_page ) {
+//			$offset = $per_page * ( $current_page - 1 );
+//		} else {
+//			$offset = 0;
+//		}
 
-		$search_term = isset($_POST['s']) ? trim($_POST['s']) : "";
-
-		$this->items = $this->wpt_list_table_data($search_term);
+		$this->items = $this->wpt_list_table_data();
 
 		$columns = $this->get_columns();
 
 		$this->_column_headers = array( $columns );
 
 		// Set the pagination
-		$this->set_pagination_args( array(
-			'total_items' => count($this->items),
-			'per_page' => $per_page,
-			'total_pages' => ceil( count($this->items) / $per_page )
-		) );
+//		$this->set_pagination_args( array(
+//			'total_items' => count($this->items),
+//			'per_page' => $per_page,
+//			'total_pages' => ceil( count($this->items) / $per_page )
+//		) );
 
 	}
 
@@ -56,11 +55,10 @@ class Settings_Table extends WP_List_Table {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $search_term The search that passed. Default is empty.
 	 * @return array $templates_array Returned array of templates for the theme.
 	 */
 
-	public function wpt_list_table_data($search_term = '') {
+	public function wpt_list_table_data() {
 
 		$all_templates = get_page_templates( null, 'page' );
 
@@ -75,10 +73,6 @@ class Settings_Table extends WP_List_Table {
 					'meta_key'   => '_wp_page_template',
 					'meta_value' => $slug
 				);
-
-				if ( ! empty( $search_term ) ) {
-					$args['s'] = $search_term;
-				}
 				$the_query = new WP_Query( $args );
 
 				$templates_array[] = array(
@@ -89,6 +83,10 @@ class Settings_Table extends WP_List_Table {
 				);
 				wp_reset_postdata();
 				$count ++;
+
+				if ($count >= 40) {
+					break;
+				}
 			}
 
 			$args = array(
