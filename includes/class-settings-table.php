@@ -45,60 +45,77 @@ class Settings_Table extends WP_List_Table {
 
 	public function wpt_list_table_data() {
 
-		$all_templates = get_page_templates( null, 'page' );
+		if ( false === ( $db_count_posts = get_transient( 'wpt-page-count' ) ) ) {
+			$db_count_posts = wp_count_posts('page');
+			$db_count_posts_int = 0;
+			foreach ( $db_count_posts as $val) {
+				$db_count_posts_int = $db_count_posts_int + intval($val);
+			}
+			set_transient( 'wpt-page-count', $db_count_posts_int, MONTH_IN_SECONDS );
+		}
 
-		$templates_array = array();
+		$db_count_posts = wp_count_posts('page');
+		$post_count_actual = 0;
+		foreach ( $db_count_posts as $val) {
+			$post_count_actual = $post_count_actual + intval($val);
+		}
 
-		if ( $all_templates ) {
+		if ( ( false === ( $templates_array = get_transient( 'wpt-page-templates' ) ) ) || ( $db_count_posts !== $post_count_actual ) ) {
+			$templates_array = array();
+			$all_templates = get_page_templates( null, 'page' );
 
-			$count = 1;
-			foreach ( $all_templates as $template => $slug ) {
-				$args          = array(
-					'post_type' => 'page',
-					'meta_key'   => '_wp_page_template',
-					'meta_value' => $slug
+			if ( $all_templates ) {
+
+				$count = 1;
+				foreach ( $all_templates as $template => $slug ) {
+					$args          = array(
+						'post_type' => 'page',
+						'meta_key'   => '_wp_page_template',
+						'meta_value' => $slug
+					);
+					$the_query = new WP_Query( $args );
+
+					$templates_array[] = array(
+						"number" => $count,
+						"title"  => $template,
+						"slug"   => $slug ,
+						"pages"  => '<a href="/wp-admin/edit.php?post_type=page&wpt=' . $slug  . '">' . $the_query->found_posts . '</a>'
+					);
+					wp_reset_postdata();
+					$count ++;
+
+					if ($count >= 40) {
+						break;
+					}
+				}
+
+				$args = array(
+					'post_type'  => 'page',
+					'meta_query' => array(
+						'relation' => 'OR',
+						array(
+							'key'     => '_wp_page_template',
+							'value'   => '',
+							'compare' => 'NOT EXISTS',
+						),
+						array(
+							'key'     => '_wp_page_template',
+							'value'   => 'default',
+							'compare' => '=',
+							'type'    => 'CHAR'
+						),
+					)
 				);
-				$the_query = new WP_Query( $args );
-
+				$the_query     = new WP_Query( $args );
 				$templates_array[] = array(
 					"number" => $count,
-					"title"  => $template,
-					"slug"   => $slug ,
-					"pages"  => '<a href="/wp-admin/edit.php?post_type=page&wpt=' . $slug  . '">' . $the_query->found_posts . '</a>'
+					"title"  => __( 'Default Template', WPT::get_id() ),
+					"slug"   => "page.php",
+					"pages"  => '<a href="/wp-admin/edit.php?post_type=page&wpt=default">' . $the_query->found_posts . '</a>'
 				);
 				wp_reset_postdata();
-				$count ++;
-
-				if ($count >= 40) {
-					break;
-				}
 			}
-
-			$args = array(
-				'post_type'  => 'page',
-				'meta_query' => array(
-					'relation' => 'OR',
-					array(
-						'key'     => '_wp_page_template',
-						'value'   => '',
-						'compare' => 'NOT EXISTS',
-					),
-					array(
-						'key'     => '_wp_page_template',
-						'value'   => 'default',
-						'compare' => '=',
-						'type'    => 'CHAR'
-					),
-				)
-			);
-			$the_query     = new WP_Query( $args );
-			$templates_array[] = array(
-				"number" => $count,
-				"title"  => __( 'Default Template', WPT::get_id() ),
-				"slug"   => "page.php",
-				"pages"  => '<a href="/wp-admin/edit.php?post_type=page&wpt=default">' . $the_query->found_posts . '</a>'
-			);
-			wp_reset_postdata();
+			set_transient( 'wpt-page-templates', $templates_array, MONTH_IN_SECONDS );
 		}
 
 		return $templates_array;
